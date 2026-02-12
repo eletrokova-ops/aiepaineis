@@ -1,163 +1,65 @@
 /* assets/js/main.js */
 
-(function () {
-  // ====== Config ======
-  const WHATSAPP_NUMBER = "5511912214610"; // formato: 55 + DDD + número (sem +)
-  const DEFAULT_WPP_TEXT = "Olá! Quero um orçamento com a A&E.";
-
-  // ====== Helpers ======
-  function buildWhatsAppUrl(number, text) {
-    const encoded = encodeURIComponent(text);
-    return `https://wa.me/${number}?text=${encoded}`;
-  }
-
-  // ====== Footer year ======
+(() => {
+  // Ano automático
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // ====== Waves parallax on scroll (sem brigar com CSS) ======
-const wave1 = document.querySelector(".wave1");
-const wave2 = document.querySelector(".wave2");
-let ticking = false;
-
-function applyWaveScroll() {
-  const y = window.scrollY || 0;
-
-  // valores bem sutis (fica premium, não “enjoa”)
-  if (wave1) {
-    wave1.style.setProperty("--sx", `${y * 0.02}px`);
-    wave1.style.setProperty("--sy", `${y * -0.03}px`);
-  }
-  if (wave2) {
-    wave2.style.setProperty("--sx", `${y * -0.015}px`);
-    wave2.style.setProperty("--sy", `${y * 0.02}px`);
-  }
-}
-
-window.addEventListener("scroll", () => {
-  if (ticking) return;
-  ticking = true;
-  requestAnimationFrame(() => {
-    applyWaveScroll();
-    ticking = false;
-  });
-}, { passive: true });
-
-applyWaveScroll();
-
-
-    // Movimento sutil (não enjoa)
-    if (wave1) {
-      wave1.style.transform = `translate3d(${y * 0.02}px, ${y * -0.03}px, 0) scale(1.02)`;
-    }
-    if (wave2) {
-      wave2.style.transform = `translate3d(${y * -0.015}px, ${y * 0.02}px, 0) scale(1.03)`;
-    }
-  }
-
-  window.addEventListener(
-    "scroll",
-    function () {
-      if (!ticking) {
-        window.requestAnimationFrame(function () {
-          onScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    },
-    { passive: true }
-  );
-
-  // Roda uma vez no load
-  onScroll();
-
-  // ====== WhatsApp links fix (caso tenha "SEU_WHATSAPP" em algum lugar) ======
-  const wppLinks = document.querySelectorAll('a[href*="wa.me/"]');
-  wppLinks.forEach((a) => {
-    const href = a.getAttribute("href") || "";
-    if (href.includes("SEU_WHATSAPP")) {
-      a.setAttribute("href", buildWhatsAppUrl(WHATSAPP_NUMBER, DEFAULT_WPP_TEXT));
-    }
-  });
-
-  // ====== Form placeholder -> abre WhatsApp com mensagem pronta ======
-  const form = document.getElementById("leadForm");
-  if (form) {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const nome = (form.elements["nome"]?.value || "").trim();
-      const empresa = (form.elements["empresa"]?.value || "").trim();
-      const whatsapp = (form.elements["whatsapp"]?.value || "").trim();
-      const mensagem = (form.elements["mensagem"]?.value || "").trim();
-
-      const parts = [];
-      if (nome) parts.push(`Nome: ${nome}`);
-      if (empresa) parts.push(`Empresa: ${empresa}`);
-      if (whatsapp) parts.push(`WhatsApp: ${whatsapp}`);
-      if (mensagem) parts.push(`Mensagem: ${mensagem}`);
-
-      const text = parts.length ? parts.join("\n") : DEFAULT_WPP_TEXT;
-
-      window.open(buildWhatsAppUrl(WHATSAPP_NUMBER, text), "_blank", "noopener");
-    });
-  }
-
-  // ====== Mobile menu (simples) ======
-  // Obs: seu CSS hoje esconde nav/header-cta no mobile.
-  // Aqui a gente só faz um "toggle" básico se você depois quiser mostrar um menu.
+  // Menu mobile (se você usar depois)
   const menuBtn = document.querySelector(".menu-btn");
   const nav = document.querySelector(".nav");
-  const cta = document.querySelector(".header-cta");
+  const headerCta = document.querySelector(".header-cta");
 
-  if (menuBtn && nav && cta) {
-    menuBtn.addEventListener("click", function () {
+  if (menuBtn && nav && headerCta) {
+    menuBtn.addEventListener("click", () => {
       const expanded = menuBtn.getAttribute("aria-expanded") === "true";
       menuBtn.setAttribute("aria-expanded", String(!expanded));
 
-      // Toggle inline (sem depender de CSS extra)
-      if (!expanded) {
-        nav.style.display = "flex";
-        nav.style.flexDirection = "column";
-        nav.style.gap = "12px";
-        nav.style.padding = "12px 0";
-
-        cta.style.display = "flex";
-        cta.style.flexDirection = "column";
-        cta.style.gap = "10px";
-        cta.style.paddingBottom = "12px";
-
-        // Cria container dropdown se não existir
-        let drop = document.querySelector(".mobile-drop");
-        if (!drop) {
-          drop = document.createElement("div");
-          drop.className = "mobile-drop";
-          drop.style.borderTop = "1px solid rgba(15, 23, 42, 0.10)";
-          drop.style.marginTop = "10px";
-          drop.style.paddingTop = "10px";
-
-          // move nav e cta pra dentro
-          const headerInner = document.querySelector(".header-inner");
-          headerInner.appendChild(drop);
-          drop.appendChild(nav);
-          drop.appendChild(cta);
-        }
-
-        drop.style.display = "block";
-      } else {
-        const drop = document.querySelector(".mobile-drop");
-        if (drop) drop.style.display = "none";
-      }
-    });
-
-    // Fecha ao clicar em algum link do menu
-    nav.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        const drop = document.querySelector(".mobile-drop");
-        if (drop) drop.style.display = "none";
-        menuBtn.setAttribute("aria-expanded", "false");
-      });
+      // Toggle simples: mostra/esconde nav + cta no mobile
+      const show = expanded ? "none" : "flex";
+      nav.style.display = show;
+      headerCta.style.display = show;
     });
   }
+
+  // Ondas discretas reagindo ao scroll (parallax suave)
+  const waves = Array.from(document.querySelectorAll(".background-waves .wave"));
+  const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+
+  function updateWaves() {
+    if (!waves.length) return;
+    const doc = document.documentElement;
+    const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+    const p = clamp(window.scrollY / maxScroll, 0, 1);
+
+    // Movimento bem discreto (ajuste se quiser mais)
+    const x1 = (p * 40 - 20).toFixed(1);
+    const y1 = (p * 26 - 13).toFixed(1);
+    const x2 = (p * -34 + 17).toFixed(1);
+    const y2 = (p * 22 - 11).toFixed(1);
+
+    if (waves[0]) {
+      waves[0].style.setProperty("--sx", `${x1}px`);
+      waves[0].style.setProperty("--sy", `${y1}px`);
+    }
+    if (waves[1]) {
+      waves[1].style.setProperty("--sx", `${x2}px`);
+      waves[1].style.setProperty("--sy", `${y2}px`);
+    }
+  }
+
+  window.addEventListener("scroll", updateWaves, { passive: true });
+  window.addEventListener("resize", updateWaves);
+  updateWaves();
+
+  // Intro full screen (se existir)
+  window.addEventListener("load", () => {
+    const intro = document.getElementById("intro");
+    if (!intro) return;
+
+    // remove após animação (bate com CSS ~3.2s)
+    setTimeout(() => {
+      intro.style.display = "none";
+    }, 3200);
+  });
 })();
