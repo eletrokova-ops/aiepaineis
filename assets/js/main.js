@@ -15,13 +15,36 @@
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // ====== Waves parallax on scroll ======
-  const wave1 = document.querySelector(".wave1");
-  const wave2 = document.querySelector(".wave2");
-  let ticking = false;
+  // ====== Waves parallax on scroll (sem brigar com CSS) ======
+const wave1 = document.querySelector(".wave1");
+const wave2 = document.querySelector(".wave2");
+let ticking = false;
 
-  function onScroll() {
-    const y = window.scrollY || 0;
+function applyWaveScroll() {
+  const y = window.scrollY || 0;
+
+  // valores bem sutis (fica premium, não “enjoa”)
+  if (wave1) {
+    wave1.style.setProperty("--sx", `${y * 0.02}px`);
+    wave1.style.setProperty("--sy", `${y * -0.03}px`);
+  }
+  if (wave2) {
+    wave2.style.setProperty("--sx", `${y * -0.015}px`);
+    wave2.style.setProperty("--sy", `${y * 0.02}px`);
+  }
+}
+
+window.addEventListener("scroll", () => {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => {
+    applyWaveScroll();
+    ticking = false;
+  });
+}, { passive: true });
+
+applyWaveScroll();
+
 
     // Movimento sutil (não enjoa)
     if (wave1) {
