@@ -27,3 +27,32 @@ if (leadForm) {
     leadForm.reset();
   });
 }
+
+// Waves parallax (suave) - reage ao scroll
+(() => {
+  const w1 = document.querySelector(".wave1");
+  const w2 = document.querySelector(".wave2");
+  if (!w1 || !w2) return;
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+  let ticking = false;
+
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+
+    requestAnimationFrame(() => {
+      const y = window.scrollY || 0;
+      const t = clamp(y / 900, 0, 1); // 0..1
+
+      // Move levemente para criar sensação de "ondas acompanhando"
+      w1.style.transform = `translate3d(${t * 30}px, ${t * 55}px, 0)`;
+      w2.style.transform = `translate3d(${-t * 40}px, ${-t * 35}px, 0)`;
+
+      ticking = false;
+    });
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+})();
