@@ -198,6 +198,7 @@
   let cards = Array.from(track.querySelectorAll(".s-card"));
   if (cards.length < 2) return;
 
+  // duplica os cards pra loop infinito
   const cloneFragment = document.createDocumentFragment();
   cards.forEach((card) => cloneFragment.appendChild(card.cloneNode(true)));
   track.appendChild(cloneFragment);
@@ -220,22 +221,24 @@
     step = first.getBoundingClientRect().width + getGap();
   };
 
-  const moveTo = (i) => {
+  const moveTo = (i, withTransition = true) => {
     if (!step) measure();
+    track.style.transition = withTransition
+      ? "transform .6s cubic-bezier(.4,0,.2,1)"
+      : "none";
     track.style.transform = `translate3d(${-i * step}px, 0, 0)`;
   };
 
   const next = () => {
     index += 1;
-    moveTo(index);
+    moveTo(index, true);
 
     const originalCount = cards.length / 2;
     if (index >= originalCount) {
       window.setTimeout(() => {
-        track.style.transition = "none";
         index = 0;
-        moveTo(index);
-        track.getBoundingClientRect();
+        moveTo(index, false);
+        track.getBoundingClientRect(); // força reflow
         track.style.transition = "transform .6s cubic-bezier(.4,0,.2,1)";
       }, 650);
     }
@@ -259,33 +262,10 @@
 
   window.addEventListener("resize", () => {
     measure();
-    moveTo(index);
+    moveTo(index, false);
   });
 
   measure();
-  moveTo(index);
+  moveTo(index, false);
   start();
 })();
-// ===== Intro splash =====
-window.addEventListener("load", () => {
-  const intro = document.getElementById("intro");
-  if (!intro) return;
-
-  // remove do DOM depois da animação
-  setTimeout(() => {
-    intro.remove();
-  }, 3600);
-});
-document.body.classList.add("intro-lock");
-
-setTimeout(() => {
-  document.body.classList.remove("intro-lock");
-}, 3600);
-window.addEventListener("load", () => {
-  const intro = document.getElementById("intro");
-  if (!intro) return;
-
-  setTimeout(() => {
-    intro.remove();
-  }, 3200); // tem que ser maior que o delay+animação do CSS
-});

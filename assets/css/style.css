@@ -89,7 +89,7 @@ h3{margin:0 0 8px;font-size:20px}
 }
 
 .intro-logo-big{
-  width: min(520px, 78vw);
+  width: min(180px,80vw);
   height:auto;
   filter: drop-shadow(0 12px 30px rgba(0,0,0,.18));
   animation: introLogoIn 1.1s cubic-bezier(.2,.9,.2,1) forwards;
@@ -299,4 +299,81 @@ textarea{min-height:120px;resize:vertical}
   .btn{width:100%}
   .hero{padding-top:72px}
   .brand-horizontal{height:46px}
+}
+/* =========================================================
+   PATCH: Intro + Header branco (sem quebrar o resto)
+   Cole no FINAL do style.css
+   ========================================================= */
+
+/* INTRO: limita tamanho da logo (estava gigantesca) */
+.intro-screen{
+  background:
+    radial-gradient(circle at 50% 45%, rgba(31,94,255,.10), transparent 55%),
+    linear-gradient(180deg,#ffffff,#eef4ff) !important;
+}
+
+.intro-logo-big{
+  width: min(320px, 70vw) !important;
+  max-width: 320px !important;
+  height: auto !important;
+  filter: drop-shadow(0 10px 26px rgba(0,0,0,.18)) !important;
+}
+
+/* HEADER branco + textos escuros */
+.site-header{
+  background: rgba(255,255,255,.95) !important;
+  border-bottom: 1px solid rgba(31,94,255,.22) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: 0 10px 28px rgba(11,19,37,.08) !important;
+}
+
+/* remove glow do logo no header */
+.site-header .brand-horizontal{
+  filter: none !important;
+}
+
+/* menu escuro */
+.site-header .nav a{
+  color: #0b1325 !important;
+  font-weight: 650 !important;
+}
+.site-header .nav a:hover{
+  color: #1f5eff !important;
+}
+.site-header .nav a::after{
+  background: linear-gradient(90deg,#1f5eff,#0aa6ff) !important;
+}
+
+/* botões do header no tema claro */
+.site-header .header-cta .btn{
+  color:#0b1325 !important;
+  background: rgba(255,255,255,.75) !important;
+  border-color: rgba(31,94,255,.30) !important;
+}
+.site-header .header-cta .btn:hover{
+  background: rgba(31,94,255,.08) !important;
+  border-color: rgba(31,94,255,.45) !important;
+}
+.site-header .header-cta .btn.primary{
+  border:0 !important;
+  background: linear-gradient(135deg,#1f5eff,#0aa6ff) !important;
+  color:#fff !important;
+  box-shadow: 0 10px 24px rgba(31,94,255,.25) !important;
+}
+/* ===== INTRO LOGO — FIX DEFINITIVO ===== */
+
+/* pega QUALQUER imagem dentro do intro */
+.intro-screen img{
+  width: 400px !important;
+  max-width: 70vw !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+/* mobile */
+@media (max-width: 480px){
+  .intro-screen img{
+    width: 220px !important;
+  }
 }
