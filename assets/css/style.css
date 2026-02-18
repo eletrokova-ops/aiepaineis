@@ -49,7 +49,7 @@ h3{margin:0 0 8px;font-size:20px}
 
 .site-header{position:sticky;top:0;z-index:60;background:rgba(6,11,22,.76);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 0}
-.brand-horizontal{height: 64px;filter:drop-shadow(0 0 10px rgba(46,125,255,.28))}
+.brand-horizontal{height: 85px;filter:drop-shadow(0 0 25px rgba(46,125,255,.28))}
 .nav{display:flex;align-items:center;gap:18px}
 .nav a{position:relative;color:#ccdcfc;font-size:14px;font-weight:600}
 .nav a::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:linear-gradient(90deg,var(--brand),var(--brand2));transform:scaleX(0);transition:.2s}
