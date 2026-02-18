@@ -313,3 +313,36 @@ textarea{min-height:120px;resize:vertical}
   .hero{padding-top:72px}
   .brand-horizontal{height:48px}
 }
+/* ===== INTRO LOGO (primeira tela) ===== */
+.intro-screen{
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+ background:
+    radial-gradient(circle at center, rgba(46,125,255,.08), transparent 55%),
+    #f4f7fc;
+
+  animation: introOut .8s ease forwards;
+  animation-delay: 2.2s; /* tempo antes de sumir */
+}
+
+.intro-logo{
+  width: min(420px, 70vw);
+  height: auto;
+  opacity: 0;
+  transform: scale(.94);
+  animation: introIn .9s ease forwards;
+  animation-delay: .15s;
+}
+
+@keyframes introIn{
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes introOut{
+  to { opacity: 0; visibility: hidden; }
+}

@@ -281,3 +281,11 @@ document.body.classList.add("intro-lock");
 setTimeout(() => {
   document.body.classList.remove("intro-lock");
 }, 3600);
+window.addEventListener("load", () => {
+  const intro = document.getElementById("intro");
+  if (!intro) return;
+
+  setTimeout(() => {
+    intro.remove();
+  }, 3200); // tem que ser maior que o delay+animação do CSS
+});
