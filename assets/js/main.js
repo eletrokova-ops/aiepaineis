@@ -1,13 +1,14 @@
 /* assets/js/main.js */
 
 (() => {
+  // Atualiza o ano no footer automaticamente
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
   const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // ===== Menu mobile =====
+  // ===== Menu Mobile =====
   const menuBtn = document.querySelector(".menu-btn");
   const nav = document.querySelector(".nav");
   const headerCta = document.querySelector(".header-cta");
@@ -25,9 +26,10 @@
       setMenuState(!expanded);
     });
 
-    // Evita nav "sumir" no desktop após interação no mobile
     const mobileMq = window.matchMedia("(max-width: 920px)");
+
     const syncMenuLayout = () => {
+      // Quando volta pro desktop, remove o display inline que foi aplicado no mobile
       if (!mobileMq.matches) {
         nav.style.removeProperty("display");
         headerCta.style.removeProperty("display");
@@ -35,6 +37,7 @@
       }
     };
 
+    // Compatibilidade
     if (typeof mobileMq.addEventListener === "function") {
       mobileMq.addEventListener("change", syncMenuLayout);
     } else if (typeof mobileMq.addListener === "function") {
@@ -45,39 +48,37 @@
     syncMenuLayout();
   }
 
-  // ===== Ondas + barra de progresso =====
+  // ===== Animações de Scroll (Ondas e Progresso) =====
   const waves = Array.from(document.querySelectorAll(".background-waves .wave"));
   const progress = document.querySelector(".progress-line");
 
-  function updateWaves() {
-    if (!waves.length || prefersReducedMotion) return;
-
+  function updateScrollVisuals() {
     const doc = document.documentElement;
+    const scrollY = window.scrollY || 0;
     const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
-    const p = clamp(window.scrollY / maxScroll, 0, 1);
+    const p = clamp(scrollY / maxScroll, 0, 1);
 
-    const x1 = (p * 40 - 20).toFixed(1);
-    const y1 = (p * 26 - 13).toFixed(1);
-    const x2 = (p * -34 + 17).toFixed(1);
-    const y2 = (p * 22 - 11).toFixed(1);
-
-    if (waves[0]) {
-      waves[0].style.setProperty("--sx", `${x1}px`);
-      waves[0].style.setProperty("--sy", `${y1}px`);
+    // Barra de progresso superior
+    if (progress) {
+      progress.style.width = `${(p * 100).toFixed(2)}%`;
     }
-    if (waves[1]) {
-      waves[1].style.setProperty("--sx", `${x2}px`);
-      waves[1].style.setProperty("--sy", `${y2}px`);
+
+    // Movimento sutil das ondas de fundo
+    if (waves.length && !prefersReducedMotion) {
+      const x1 = (p * 40 - 20).toFixed(1);
+      const y1 = (p * 26 - 13).toFixed(1);
+      const x2 = (p * -34 + 17).toFixed(1);
+      const y2 = (p * 22 - 11).toFixed(1);
+
+      if (waves[0]) {
+        waves[0].style.setProperty("--sx", `${x1}px`);
+        waves[0].style.setProperty("--sy", `${y1}px`);
+      }
+      if (waves[1]) {
+        waves[1].style.setProperty("--sx", `${x2}px`);
+        waves[1].style.setProperty("--sy", `${y2}px`);
+      }
     }
-  }
-
-  function updateProgress() {
-    if (!progress) return;
-
-    const doc = document.documentElement;
-    const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
-    const pct = clamp((window.scrollY / maxScroll) * 100, 0, 100);
-    progress.style.width = `${pct}%`;
   }
 
   let ticking = false;
@@ -85,19 +86,20 @@
     if (ticking) return;
     ticking = true;
     window.requestAnimationFrame(() => {
-      updateWaves();
-      updateProgress();
+      updateScrollVisuals();
       ticking = false;
     });
   };
 
   window.addEventListener("scroll", onScrollLike, { passive: true });
   window.addEventListener("resize", onScrollLike);
-  updateWaves();
-  updateProgress();
 
-  // ===== Reveal =====
+  // roda uma vez ao carregar
+  updateScrollVisuals();
+
+  // ===== Efeito Reveal (Surgir ao rolar) =====
   const revealEls = Array.from(document.querySelectorAll(".reveal"));
+
   if (revealEls.length) {
     if (prefersReducedMotion || !("IntersectionObserver" in window)) {
       revealEls.forEach((el) => el.classList.add("is-visible"));
@@ -111,161 +113,49 @@
             }
           });
         },
-        { threshold: 0.18 }
+        { threshold: 0.15 }
       );
 
       revealEls.forEach((el) => obs.observe(el));
     }
   }
 
-  // ===== Contadores =====
-  const counters = Array.from(document.querySelectorAll("[data-count]"));
-  const animateCount = (el) => {
-    const target = Number(el.getAttribute("data-count") || 0);
-    const duration = 1100;
-    const start = performance.now();
-
-    const frame = (now) => {
-      const t = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - t, 3);
-      el.textContent = String(Math.round(target * eased));
-      if (t < 1) requestAnimationFrame(frame);
-    };
-
-    requestAnimationFrame(frame);
-  };
-
-  if (counters.length) {
-    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
-      counters.forEach((counter) => {
-        counter.textContent = counter.getAttribute("data-count") || "0";
-      });
-    } else {
-      const cObs = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              animateCount(entry.target);
-              cObs.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.35 }
-      );
-
-      counters.forEach((counter) => cObs.observe(counter));
-    }
-  }
-
-  // ===== Form -> WhatsApp =====
+  // ===== Integração Formulário -> WhatsApp =====
   const leadForm = document.getElementById("leadForm");
   if (leadForm) {
     leadForm.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const nome = String(leadForm.querySelector('[name="nome"]')?.value || "").trim();
-      const whatsapp = String(leadForm.querySelector('[name="whatsapp"]')?.value || "").trim();
-      const email = String(leadForm.querySelector('[name="email"]')?.value || "").trim();
-      const mensagem = String(leadForm.querySelector('[name="mensagem"]')?.value || "").trim();
+      // Proteção contra SPAM (Honeypot)
+      const botCheck = (leadForm.querySelector('[name="website"]')?.value || "").trim();
+      if (botCheck) return;
 
-      if (!nome || !whatsapp || !email || !mensagem) return;
+      const data = new FormData(leadForm);
+
+      const nome = String(data.get("nome") || "").trim();
+      const whatsapp = String(data.get("whatsapp") || "").trim();
+      const email = String(data.get("email") || "").trim();
+      const mensagem = String(data.get("mensagem") || "").trim();
+
+      if (!nome || !whatsapp || !mensagem) {
+        alert("Por favor, preencha Nome, WhatsApp e Mensagem.");
+        return;
+      }
 
       const texto = [
-        "Olá! Quero uma proposta técnica da A&E Painéis.",
+        "*Solicitação de Proposta Técnica - A&E Painéis*",
         "",
-        `Nome: ${nome}`,
-        `WhatsApp: ${whatsapp}`,
-        `E-mail: ${email}`,
+        `*Nome:* ${nome}`,
+        `*WhatsApp:* ${whatsapp}`,
+        email ? `*E-mail:* ${email}` : "",
         "",
-        "Mensagem:",
-        mensagem,
-      ].join("\n");
+        "*Mensagem:*",
+        mensagem
+      ].filter(Boolean).join("\n");
 
       const phone = "5511912214610";
       const url = `https://wa.me/${phone}?text=${encodeURIComponent(texto)}`;
       window.open(url, "_blank", "noopener");
     });
   }
-})();
-
-// ===== Soluções estilo jornal (auto-slide robusto + loop) =====
-(() => {
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const track = document.querySelector(".solutions-track");
-  const viewport = document.querySelector(".solutions-carousel");
-  if (!track || !viewport) return;
-
-  let cards = Array.from(track.querySelectorAll(".s-card"));
-  if (cards.length < 2) return;
-
-  // duplica os cards pra loop infinito
-  const cloneFragment = document.createDocumentFragment();
-  cards.forEach((card) => cloneFragment.appendChild(card.cloneNode(true)));
-  track.appendChild(cloneFragment);
-
-  cards = Array.from(track.querySelectorAll(".s-card"));
-
-  let index = 0;
-  let step = 0;
-  let timer = null;
-
-  const getGap = () => {
-    const styles = window.getComputedStyle(track);
-    const gap = Number.parseFloat(styles.columnGap || styles.gap || "0");
-    return Number.isFinite(gap) ? gap : 0;
-  };
-
-  const measure = () => {
-    const first = track.querySelector(".s-card");
-    if (!first) return;
-    step = first.getBoundingClientRect().width + getGap();
-  };
-
-  const moveTo = (i, withTransition = true) => {
-    if (!step) measure();
-    track.style.transition = withTransition
-      ? "transform .6s cubic-bezier(.4,0,.2,1)"
-      : "none";
-    track.style.transform = `translate3d(${-i * step}px, 0, 0)`;
-  };
-
-  const next = () => {
-    index += 1;
-    moveTo(index, true);
-
-    const originalCount = cards.length / 2;
-    if (index >= originalCount) {
-      window.setTimeout(() => {
-        index = 0;
-        moveTo(index, false);
-        track.getBoundingClientRect(); // força reflow
-        track.style.transition = "transform .6s cubic-bezier(.4,0,.2,1)";
-      }, 650);
-    }
-  };
-
-  const start = () => {
-    if (prefersReducedMotion) return;
-    if (timer) clearInterval(timer);
-    timer = setInterval(next, 5000);
-  };
-
-  const stop = () => {
-    if (timer) clearInterval(timer);
-    timer = null;
-  };
-
-  viewport.addEventListener("mouseenter", stop);
-  viewport.addEventListener("mouseleave", start);
-  viewport.addEventListener("touchstart", stop, { passive: true });
-  viewport.addEventListener("touchend", start, { passive: true });
-
-  window.addEventListener("resize", () => {
-    measure();
-    moveTo(index, false);
-  });
-
-  measure();
-  moveTo(index, false);
-  start();
 })();

@@ -17,13 +17,7 @@
   <meta property="og:locale" content="pt_BR" />
   <meta property="og:image" content="https://aepaineis.com.br/assets/img/og.svg" />
 
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="A&E Painéis | Engenharia elétrica industrial de alta performance" />
-  <meta name="twitter:description" content="Montagem industrial de quadros elétricos e barramentos com controle de qualidade." />
-  <meta name="twitter:image" content="https://aepaineis.com.br/assets/img/og.svg" />
-
   <link rel="icon" href="assets/icons/favicon.ico" />
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png" />
   <link rel="manifest" href="assets/icons/site.webmanifest" />
@@ -50,21 +44,11 @@
 </head>
 
 <body>
- <body>
   <div class="intro-screen" id="intro" aria-hidden="true">
-    <img src="assets/img/logos/logopmf.svg" alt="A&E Painéis" class="intro-logo" />
+    <img src="assets/img/logos/logopmf.svg" alt="A&E Painéis" class="intro-logo-big" />
   </div>
 
   <div class="progress-line" aria-hidden="true"></div>
-  <div class="background-waves" aria-hidden="true">
-    <div class="wave wave1"></div>
-    <div class="wave wave2"></div>
-  </div>
-
-  <!-- resto do site... -->
-
-  <div class="progress-line" aria-hidden="true"></div>
-
   <div class="background-waves" aria-hidden="true">
     <div class="wave wave1"></div>
     <div class="wave wave2"></div>
@@ -103,30 +87,33 @@
 
           <div class="hero-actions">
             <a class="btn primary" href="#contato">Falar com especialista</a>
-            <a class="btn" target="_blank" rel="noopener" href="https://wa.me/5511912214610?text=Ol%C3%A1!%20Quero%20um%20or%C3%A7amento%20com%20a%20A%26E%20Pain%C3%A9is.">WhatsApp</a>
+
+            <!-- WhatsApp com texto devidamente "encodeado" -->
+            <a class="btn" target="_blank" rel="noopener"
+              href="https://wa.me/5511912214610?text=Ol%C3%A1%21%20Quero%20um%20or%C3%A7amento%20com%20a%20A%26E%20Pain%C3%A9is.">
+              WhatsApp
+            </a>
           </div>
         </div>
 
         <div class="hero-panel reveal">
-  <h3>Entrega padrão A&amp;E</h3>
-
-  <ul class="metrics-grid">
-    <li>
-      <span class="metric-value">Layout interno</span>
-      <span class="metric-label">Organização funcional e acesso facilitado</span>
-    </li>
-
-    <li>
-      <span class="metric-value">Identificação completa</span>
-      <span class="metric-label">Cabos, bornes e componentes padronizados</span>
-    </li>
-
-    <li>
-      <span class="metric-value">Documentação técnica</span>
-      <span class="metric-label">Checklist, registros e apoio à instalação</span>
-    </li>
-  </ul>
-</div>
+          <h3>Entrega padrão A&amp;E</h3>
+          <ul class="metrics-grid">
+            <li>
+              <span class="metric-value">Layout interno</span>
+              <span class="metric-label">Organização funcional e acesso facilitado</span>
+            </li>
+            <li>
+              <span class="metric-value">Identificação completa</span>
+              <span class="metric-label">Cabos, bornes e componentes padronizados</span>
+            </li>
+            <li>
+              <span class="metric-value">Documentação técnica</span>
+              <span class="metric-label">Checklist, registros e apoio à instalação</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <section class="section reveal" id="solucoes">
@@ -183,7 +170,6 @@
       <div class="container">
         <p class="kicker">Processo</p>
         <h2>Fluxo claro, técnico e auditável</h2>
-
         <ol class="timeline">
           <li><h3>01 • Diagnóstico técnico</h3><p>Leitura de projeto, requisitos elétricos e critérios de aplicação.</p></li>
           <li><h3>02 • Engenharia de montagem</h3><p>Planejamento de layout interno, componentes e sequência produtiva.</p></li>
@@ -197,35 +183,22 @@
       <div class="container">
         <p class="kicker">Portfólio</p>
         <h2>Projetos em operação</h2>
-
         <div class="portfolio-grid">
           <figure class="project-item">
-            <img class="project-img" src="assets/img/projetos/projeto-01.jpg" alt="Quadro elétrico montado e identificado" loading="lazy" />
-            <figcaption>
-              <h3>Quadro de distribuição</h3>
-              <p>Organização e identificação para instalação ágil.</p>
-            </figcaption>
+            <img class="project-img" src="assets/img/projetos/projeto-01.jpg" alt="Quadro elétrico montado" loading="lazy" />
+            <figcaption><h3>Quadro de distribuição</h3><p>Organização e identificação para instalação ágil.</p></figcaption>
           </figure>
           <figure class="project-item">
-            <img class="project-img" src="assets/img/projetos/projeto-02.jpg" alt="Barramentos de cobre sob medida" loading="lazy" />
-            <figcaption>
-              <h3>Barramentos sob medida</h3>
-              <p>Conjunto técnico para performance e continuidade operacional.</p>
-            </figcaption>
+            <img class="project-img" src="assets/img/projetos/projeto-02.jpg" alt="Barramentos de cobre" loading="lazy" />
+            <figcaption><h3>Barramentos sob medida</h3><p>Conjunto técnico para performance e continuidade.</p></figcaption>
           </figure>
           <figure class="project-item">
-            <img class="project-img" src="assets/img/projetos/projeto-03.jpg" alt="Painel elétrico para infraestrutura" loading="lazy" />
-            <figcaption>
-              <h3>Painel para infraestrutura</h3>
-              <p>Entrega preparada para comissionamento e validação em campo.</p>
-            </figcaption>
+            <img class="project-img" src="assets/img/projetos/projeto-03.jpg" alt="Painel elétrico" loading="lazy" />
+            <figcaption><h3>Painel para infraestrutura</h3><p>Entrega preparada para comissionamento.</p></figcaption>
           </figure>
           <figure class="project-item">
-            <img class="project-img" src="assets/img/projetos/projeto-04.jpg" alt="Painel modular com organização interna" loading="lazy" />
-            <figcaption>
-              <h3>Painel modular</h3>
-              <p>Setorização inteligente para manutenção e inspeção futuras.</p>
-            </figcaption>
+            <img class="project-img" src="assets/img/projetos/projeto-04.jpg" alt="Painel modular" loading="lazy" />
+            <figcaption><h3>Painel modular</h3><p>Setorização inteligente para manutenção futura.</p></figcaption>
           </figure>
         </div>
       </div>
@@ -236,28 +209,28 @@
         <div class="contact-pane">
           <p class="kicker">Contato comercial</p>
           <h2>Solicite uma proposta técnica</h2>
-          <p class="lead">Compartilhe os dados do seu projeto e retornamos com escopo recomendado, prazo e próximos passos.</p>
 
-          <form id="leadForm">
-            <input name="website" style="display:none" tabindex="-1" autocomplete="off">
+          <!-- data-endpoint ajuda seu JS a saber pra onde mandar -->
+          <form id="leadForm" data-endpoint="/api/lead" novalidate>
+            <!-- honeypot anti-spam -->
+            <input name="website" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+
             <label>Nome<input name="nome" required /></label>
             <label>WhatsApp<input name="whatsapp" required /></label>
             <label>E-mail<input name="email" type="email" required /></label>
             <label>Mensagem<textarea name="mensagem" required placeholder="Tipo de quadro, corrente/potência, prazo e local da obra..."></textarea></label>
-            <button class="btn primary" type="submit">Enviar para WhatsApp</button>
-            <p class="muted">A mensagem é aberta no WhatsApp com os dados preenchidos.</p>
+
+            <button class="btn primary" type="submit">Enviar</button>
           </form>
         </div>
 
         <aside class="contact-side">
           <h3>Canal direto</h3>
-          <p class="muted">Atendimento rápido para indústria, infraestrutura e retrofit.</p>
           <div class="stack">
-            <a class="btn primary" target="_blank" rel="noopener" href="https://wa.me/5511912214610?text=Ol%C3%A1!%20Quero%20um%20or%C3%A7amento%20com%20a%20A%26E%20Pain%C3%A9is.">📲 WhatsApp</a>
+            <a class="btn primary" target="_blank" rel="noopener" href="https://wa.me/5511912214610">📲 WhatsApp</a>
             <a class="btn" href="mailto:aiepaineis@gmail.com">✉️ aiepaineis@gmail.com</a>
-            <div class="muted">📍 São Bernardo do Campo - SP</div>
           </div>
-          <div class="note">R. Chile, 203 - Taboão, São Bernardo do Campo - SP</div>
+          <div class="note">📍 R. Chile, 203 - Taboão, São Bernardo do Campo - SP</div>
         </aside>
       </div>
     </section>
