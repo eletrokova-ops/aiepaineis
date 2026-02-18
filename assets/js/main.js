@@ -198,7 +198,6 @@
   let cards = Array.from(track.querySelectorAll(".s-card"));
   if (cards.length < 2) return;
 
-  // duplica os cards pra loop infinito
   const cloneFragment = document.createDocumentFragment();
   cards.forEach((card) => cloneFragment.appendChild(card.cloneNode(true)));
   track.appendChild(cloneFragment);
@@ -221,24 +220,22 @@
     step = first.getBoundingClientRect().width + getGap();
   };
 
-  const moveTo = (i, withTransition = true) => {
+  const moveTo = (i) => {
     if (!step) measure();
-    track.style.transition = withTransition
-      ? "transform .6s cubic-bezier(.4,0,.2,1)"
-      : "none";
     track.style.transform = `translate3d(${-i * step}px, 0, 0)`;
   };
 
   const next = () => {
     index += 1;
-    moveTo(index, true);
+    moveTo(index);
 
     const originalCount = cards.length / 2;
     if (index >= originalCount) {
       window.setTimeout(() => {
+        track.style.transition = "none";
         index = 0;
-        moveTo(index, false);
-        track.getBoundingClientRect(); // força reflow
+        moveTo(index);
+        track.getBoundingClientRect();
         track.style.transition = "transform .6s cubic-bezier(.4,0,.2,1)";
       }, 650);
     }
@@ -262,10 +259,10 @@
 
   window.addEventListener("resize", () => {
     measure();
-    moveTo(index, false);
+    moveTo(index);
   });
 
   measure();
-  moveTo(index, false);
+  moveTo(index);
   start();
 })();
