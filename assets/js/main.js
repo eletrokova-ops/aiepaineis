@@ -266,3 +266,18 @@
   moveTo(index);
   start();
 })();
+// ===== Intro splash =====
+window.addEventListener("load", () => {
+  const intro = document.getElementById("intro");
+  if (!intro) return;
+
+  // remove do DOM depois da animação
+  setTimeout(() => {
+    intro.remove();
+  }, 3600);
+});
+document.body.classList.add("intro-lock");
+
+setTimeout(() => {
+  document.body.classList.remove("intro-lock");
+}, 3600);
