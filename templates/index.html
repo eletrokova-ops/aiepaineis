@@ -1,5 +1,22 @@
 ﻿{% extends "base.html" %}
 
+{# ===== SEO da Home ===== #}
+{% block title %}A&E Painéis | Painéis Elétricos, Barramentos e Máquinas Especiais{% endblock %}
+
+{% block meta_description %}
+Projetos sob medida em painéis elétricos industriais, barramentos e máquinas especiais para automação e linhas com injetoras. Atendimento técnico com padrão industrial.
+{% endblock %}
+
+{% block og_title %}A&E Painéis | Soluções Elétricas Industriais{% endblock %}
+{% block og_description %}
+Painéis elétricos, barramentos e máquinas especiais com padrão técnico e acabamento superior. Solicite um pré-orçamento técnico.
+{% endblock %}
+
+{% block twitter_title %}A&E Painéis | Soluções Elétricas Industriais{% endblock %}
+{% block twitter_description %}
+Painéis elétricos, barramentos e máquinas especiais. Atendimento profissional com padrão industrial.
+{% endblock %}
+
 {% block css_extra %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/hero.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/servicos.css') }}">
