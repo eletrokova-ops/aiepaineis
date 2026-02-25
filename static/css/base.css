@@ -1,0 +1,178 @@
+/* =========================
+   RESET / BASE
+========================= */
+
+*,
+*::before,
+*::after{
+  box-sizing: border-box;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+
+  font-family: 'Inter', sans-serif;
+  color: #ffffff;
+
+  /* fundo premium */
+  background:
+    radial-gradient(1200px 600px at 20% 10%, rgba(240,185,11,0.08), transparent 60%),
+    radial-gradient(900px 500px at 80% 80%, rgba(255,255,255,0.04), transparent 60%),
+    #0f0f0f;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+main{
+  width: 100%;
+}
+
+/* Seções */
+section{
+  padding: 90px 8%;
+  scroll-margin-top: 90px;
+}
+
+/* Container padrão */
+.container{
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Tipografia */
+h1, h2, h3, h4, h5, h6{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  letter-spacing: .3px;
+  margin: 0;
+}
+
+p{
+  margin: 0;
+}
+
+.section-head p{
+  font-weight: 500;
+}
+
+/* Responsivo global */
+@media (max-width: 600px){
+  section{
+    padding: 75px 6%;
+    scroll-margin-top: 80px;
+  }
+}
+
+/* =========================
+   ANIMAÇÃO AO APARECER (Scroll Reveal)
+========================= */
+
+.reveal{
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s ease, transform .7s ease;
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* variações */
+.reveal-left{ transform: translateX(-24px); }
+.reveal-right{ transform: translateX(24px); }
+.reveal-up{ transform: translateY(24px); }
+
+.reveal.is-visible.reveal-left,
+.reveal.is-visible.reveal-right,
+.reveal.is-visible.reveal-up{
+  transform: translate(0,0);
+}
+
+/* acessibilidade */
+@media (prefers-reduced-motion: reduce){
+  .reveal{
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* =========================
+   STAGGER - Projetos
+========================= */
+
+.projetos-grid .projeto-item:nth-child(1) { transition-delay: .05s; }
+.projetos-grid .projeto-item:nth-child(2) { transition-delay: .12s; }
+.projetos-grid .projeto-item:nth-child(3) { transition-delay: .18s; }
+.projetos-grid .projeto-item:nth-child(4) { transition-delay: .24s; }
+.projetos-grid .projeto-item:nth-child(5) { transition-delay: .30s; }
+.projetos-grid .projeto-item:nth-child(6) { transition-delay: .36s; }
+/* =========================
+   BOTÕES GLOBAIS
+========================= */
+
+.btn-primary{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 16px 34px;
+
+  background: linear-gradient(135deg, #f0b90b, #d8a500);
+  color: #111;
+
+  font-weight: 900;
+  text-decoration: none;
+
+  border-radius: 12px;
+  border: none;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 14px 40px rgba(240,185,11,0.25);
+
+  transition: all .25s ease;
+}
+
+.btn-primary:hover{
+  transform: translateY(-3px);
+  box-shadow:
+    0 20px 60px rgba(240,185,11,0.35),
+    0 0 40px rgba(240,185,11,0.15);
+}
+
+/* Outline elegante */
+.btn-outline{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 16px 34px;
+
+  background: transparent;
+  color: #fff;
+
+  font-weight: 800;
+  text-decoration: none;
+
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.3);
+
+  transition: all .25s ease;
+}
+
+.btn-outline:hover{
+  border-color: #f0b90b;
+  color: #f0b90b;
+  transform: translateY(-3px);
+}

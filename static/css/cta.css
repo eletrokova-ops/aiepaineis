@@ -1,0 +1,66 @@
+/* =========================
+   CTA - Estilo Faixa Horizontal
+========================= */
+
+.cta{
+  padding: 100px 8%;
+  background:
+    radial-gradient(900px 380px at 12% 25%, rgba(240,185,11,0.10), transparent 60%),
+    #0f0f0f;
+
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.cta-box{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+
+  padding: 28px 32px;
+  border-radius: 16px;
+
+  border: 1px solid rgba(255,255,255,0.12);
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+
+  box-shadow: 0 18px 60px rgba(0,0,0,0.45);
+}
+
+.cta-text h3{
+  margin: 0;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.cta-text p{
+  margin: 10px 0 0;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.7;
+  max-width: 520px;
+}
+
+.cta-actions{
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Responsivo */
+@media (max-width: 900px){
+  .cta-box{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cta-actions{
+    width: 100%;
+  }
+
+  .cta-actions .btn-primary,
+  .cta-actions .btn-outline{
+    width: 100%;
+    text-align: center;
+  }
+}

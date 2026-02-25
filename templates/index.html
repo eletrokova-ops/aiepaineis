@@ -1,0 +1,19 @@
+﻿{% extends "base.html" %}
+
+{% block css_extra %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/hero.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/servicos.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sobre.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/cta.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/contato.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/projetos.css') }}">
+{% endblock %}
+
+{% block content %}
+  {% include 'hero.html' %}
+  {% include 'servicos.html' %}
+  {% include 'sobre.html' %}
+  {% include 'projetos.html' %}
+  {% include 'cta.html' %}
+  {% include 'contato.html' %}
+{% endblock %}
